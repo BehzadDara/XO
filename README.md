@@ -17,7 +17,7 @@
 
 ## 📝 How to use it
 
-Run the project and open 2 tabs, first one is X and the other is O, when the game finish, alert of result will be displayed and the game will restarts...
+Run the project and open 2 tabs, first player is X and the other is O, when the game finishes, alert of result will be displayed for both players and the game will restarts...
 
 ---
 
