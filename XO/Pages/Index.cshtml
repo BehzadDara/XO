@@ -1,0 +1,26 @@
+﻿@page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>XO Game</title>
+    <link rel="stylesheet" href="~/css/game.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+    <script src="~/js/game.js"></script>
+</head>
+<body>
+    <h1>XO Game</h1>
+    <div id="status">Connecting...</div>
+    <div id="board">
+        <div class="cell" data-x="0" data-y="0"></div>
+        <div class="cell" data-x="0" data-y="1"></div>
+        <div class="cell" data-x="0" data-y="2"></div>
+        <div class="cell" data-x="1" data-y="0"></div>
+        <div class="cell" data-x="1" data-y="1"></div>
+        <div class="cell" data-x="1" data-y="2"></div>
+        <div class="cell" data-x="2" data-y="0"></div>
+        <div class="cell" data-x="2" data-y="1"></div>
+        <div class="cell" data-x="2" data-y="2"></div>
+    </div>
+</body>
+</html>
