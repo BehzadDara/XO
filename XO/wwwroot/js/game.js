@@ -26,8 +26,12 @@
     });
 
     connection.on("ShowResult", (result) => {
-        alert(result);
-        document.querySelectorAll(".cell").forEach(cell => cell.innerText = "");
+        showAlert(result).then(() => {
+            document.querySelectorAll(".cell").forEach(cell => cell.innerText = "");
+
+            connection.invoke("Reset")
+                .catch(err => console.error(err.toString()));
+        });
     });
 
     document.querySelectorAll(".cell").forEach(cell => {
@@ -40,3 +44,10 @@
         });
     });
 });
+
+function showAlert(message) {
+    return new Promise((resolve) => {
+        alert(message);
+        resolve();
+    });
+}

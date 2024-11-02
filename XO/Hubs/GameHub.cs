@@ -8,6 +8,7 @@ public class GameHub : Hub
     private static string? playerX;
     private static string? playerO;
     private static bool xTurn = true;
+    private static bool bothConnected = false;
 
     public async Task JoinGame()
     {
@@ -19,6 +20,7 @@ public class GameHub : Hub
         }
         else if (string.IsNullOrEmpty(playerO))
         {
+            bothConnected = true;
             playerO = Context.ConnectionId;
             await Clients.Client(playerX).SendAsync("Message", "Player O joined. You start.");
             await Clients.Caller.SendAsync("SetPlayer", "O");
@@ -28,7 +30,7 @@ public class GameHub : Hub
 
     public async Task MakeMove(int x, int y, string player)
     {
-        if (board[x, y] == null && ((player == "X" && xTurn) || (player == "O" && !xTurn)))
+        if (bothConnected && board[x, y] == null && ((player == "X" && xTurn) || (player == "O" && !xTurn)))
         {
             board[x, y] = player;
             xTurn = !xTurn;
@@ -39,13 +41,11 @@ public class GameHub : Hub
                 await Task.Delay(100);
                 await Clients.Caller.SendAsync("ShowResult", "You Win!");
                 await Clients.Others.SendAsync("ShowResult", "You Lose!");
-                ResetGame();
             }
             else if (IsBoardFull())
             {
                 await Task.Delay(100);
                 await Clients.All.SendAsync("ShowResult", "It's a draw!");
-                ResetGame();
             }
         }
         else
@@ -83,10 +83,13 @@ public class GameHub : Hub
         return true;
     }
 
-    private static void ResetGame()
+    public static void ResetGame()
     {
         board = new string[3, 3];
+        playerX = null;
+        playerO = null;
         xTurn = true;
+        bothConnected = false;
     }
 
     public override async Task OnDisconnectedAsync(Exception? exception)
